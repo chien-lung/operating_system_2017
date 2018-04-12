@@ -1,0 +1,18 @@
+總計 72
+-rw-rw-r-- 1 lung lung 2179  3月 26 15:05 0410784_hw1.c
+-rw-rw-r-- 1 lung lung  405  3月 25 01:12 1.c
+-rw-rw-r-- 1 lung lung   82  3月 13 23:01 1.cpp
+-rwxrwxr-x 1 lung lung 8064  3月 26 15:05 1.out
+-rw-r--r-- 1 lung lung  651  3月 27 22:17 1.txt
+-rwxrwxr-x 1 lung lung 7540  3月 13 23:45 2
+-rw-r--r-- 1 lung lung  751  3月 27 22:06 2.txt
+-rwxrwxr-x 1 lung lung 8052  3月 27 22:17 hw1
+-rw-rw-r-- 1 lung lung 2153  3月 27 22:17 hw1.c
+-rw-rw-r-- 1 lung lung  686  3月 26 15:05 out.txt
+-rwxrwxr-x 1 lung lung 7380  3月 18 20:25 t
+-rwxrwxr-x 1 lung lung 7628  3月 25 16:08 try
+-rw-rw-r-- 1 lung lung  988  3月 25 16:08 try.c
+20:25 t
+-rwxrwxr-x  1 lung lung 7628  3月 25 16:08 try
+-rw-rw-r--  1 lung lung  988  3月 25 16:08 try.c
+> 
