@@ -4,50 +4,49 @@
 #include<semaphore.h>
 #include<sys/time.h>
 #include<time.h>
+#define N 100000
 void quickSort(int arr[], int left, int right);
-void bubbleSort(int arr[], int N);
+void bubbleSort(int arr[]);
 int main(int argc, char* argv[]){
-	FILE *fin, *fout1, *fout2;
-	int *nums;
-	int  N; 
+	FILE *fin, *fout1, *fout2, *fout;
+	int nums1[N],nums2[N];
+	int left=0, right=N-1;
 	int sec,usec;
 	struct timeval start, end;
 
 	srand(time(NULL));
-	fin = fopen(argv[1],"r");
+	fout = fopen("input.txt","w");
+	//fin = fopen(argv[1],"r");
 	fout1 = fopen("output1.txt","w");
 	fout2 = fopen("output2.txt","w");
 
-	fscanf(fin,"%d", &N);
-	nums = (int*)malloc(N*sizeof(int));
+	fprintf(fout,"%d \n",N);
 	for(int i=0;i<N;i++){
-		fscanf(fin,"%d ",&nums[i]);
+		nums1[i] = nums2[i] = rand()%1000000+1;
+		fprintf(fout,"%d ",nums1[i]);
 	}
-	
 	gettimeofday(&start,0);
-	int left=0, right=N-1;
-	quickSort(nums,left,right);
+	quickSort(nums1,left,right);
 	gettimeofday(&end,0);
 	for(int i=0;i<N;i++)
-		fprintf(fout1,"%d ",nums[i]);
+		fprintf(fout1,"%d ",nums1[i]);
 	sec = end.tv_sec - start.tv_sec;
 	usec = end.tv_usec - start.tv_usec;
 	printf("quickSort time(%d datas): %fsec.\n",N,sec+usec/1000000.0);
 	
-	
+
 	gettimeofday(&start,0);
-	bubbleSort(nums,N);
+	bubbleSort(nums2);
 	gettimeofday(&end,0);
 	for(int i=0;i<N;i++)
-		fprintf(fout2,"%d ",nums[i]);
+		fprintf(fout2,"%d ",nums2[i]);
 	sec = end.tv_sec - start.tv_sec;
 	usec = end.tv_usec - start.tv_usec;
 	printf("bubbleSort time(%d datas): %fsec.\n",N,sec+usec/1000000.0);
-	
-	
+
 	fclose(fout1);
 	fclose(fout2);
-	fclose(fin);
+	fclose(fout);
 
 }
 void quickSort(int arr[], int left, int right){
@@ -74,7 +73,7 @@ void quickSort(int arr[], int left, int right){
 	if(i < right)
 		quickSort(arr, i, right);
 }
-void bubbleSort(int arr[], int N){
+void bubbleSort(int arr[]){
 	for(int i=0;i<N-1;i++)
 		for(int j=0;j<N-i-1;j++)
 			if(arr[j]>arr[j+1]){
