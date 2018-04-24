@@ -4,12 +4,18 @@
 #include<semaphore.h>
 #include<sys/time.h>
 #include<time.h>
+#define THREAD_NUM 15
 void quickSort(int arr[], int left, int right);
 void bubbleSort(int arr[], int N);
+int left[THREAD_NUM];
+int right[THREAD_NUM];
+sem_t *sem = (sem_t*)malloc(THREAD_NUM*sizeof(sem_t));
+
 int main(int argc, char* argv[]){
 	FILE *fin, *fout1, *fout2;
 	int *nums;
 	int  N; 
+	pthread_t thread[THREAD_NUM];
 	int sec,usec;
 	struct timeval start, end;
 
@@ -22,6 +28,11 @@ int main(int argc, char* argv[]){
 	nums = (int*)malloc(N*sizeof(int));
 	for(int i=0;i<N;i++){
 		fscanf(fin,"%d ",&nums[i]);
+	}
+	fclose(fin);
+
+	for(int i=0;i<THREAD_NUM;i++){
+		pthread_create(&thread[i],NULL,quickSort,NULL);
 	}
 	
 	gettimeofday(&start,0);
@@ -47,7 +58,6 @@ int main(int argc, char* argv[]){
 	
 	fclose(fout1);
 	fclose(fout2);
-	fclose(fin);
 
 }
 void quickSort(int arr[], int left, int right){
@@ -68,11 +78,11 @@ void quickSort(int arr[], int left, int right){
 			j--;
 		}
 	}
-
-	if(left < j)
-		quickSort(arr, left, j);
-	if(i < right)
-		quickSort(arr, i, right);
+	
+	//if(left < j)
+	//	quickSort(arr, left, j);
+	//if(i < right)
+	//	quickSort(arr, i, right);
 }
 void bubbleSort(int arr[], int N){
 	for(int i=0;i<N-1;i++)
