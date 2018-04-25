@@ -45,7 +45,7 @@ int main(int argc, char* argv[]){
 		thread_num_ptr = &thread_num;
 		sem_init(&sem[thread_num],0,0);
 		pthread_create(&thread[thread_num], NULL, quickSort, (void*)thread_num_ptr);
-		//usleep(100);
+		usleep(200);
 	}
 
 	left[0]=0;
@@ -55,7 +55,9 @@ int main(int argc, char* argv[]){
 	//signal first thread to start
 	sem_post(&sem[0]);
 	//wait for all thread finish
+	printf("main wait\n");
 	sem_wait(&sem_main);
+	printf("main continue\n");
 	gettimeofday(&end,0);
 	for(int i=0;i<N;i++)
 		fprintf(fout1,"%d ",nums[i]);
@@ -87,7 +89,7 @@ void *quickSort(void* thread_num_ptr/*int arr[], int left, int right*/){
 		sort = USING_QUICKSORT;
 	else //7~14
 		sort = USING_BUBBLESORT;
-	printf("thread_num: %d\n",thread_num);
+	//printf("thread_num: %d\n",thread_num);
 	
 	/*
 	wait for signal
@@ -154,6 +156,11 @@ void *quickSort(void* thread_num_ptr/*int arr[], int left, int right*/){
 					nums[j] = nums[j+1];
 					nums[j+1] = tmp;
 				}
+		printf("thread %d's array: ",thread_num);
+		for(int i=left[thread_num];i<N;i++)
+			printf("%d ",nums[i]);
+		printf("\n");
+		sem_post(&sem[thread_num]);
 		printf("thread %d exit\n",thread_num);
 		pthread_exit(NULL);
 
