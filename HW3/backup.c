@@ -2,7 +2,6 @@
 #include<stdlib.h>
 #include<pthread.h>
 #include<semaphore.h>
-#include<unistd.h>
 #include<sys/time.h>
 #define THREAD_NUMS 15
 #define USING_QUICKSORT 1
@@ -36,6 +35,7 @@ int main(int argc, char* argv[]){
 		fscanf(fin,"%d ",&nums[i]);
 	}
 	fclose(fin);
+
 	/*
 	create 15 threads, 15 semaphores, and main semaphore
 	*/
@@ -45,7 +45,6 @@ int main(int argc, char* argv[]){
 		thread_num_ptr = &thread_num;
 		sem_init(&sem[thread_num],0,0);
 		pthread_create(&thread[thread_num], NULL, quickSort, (void*)thread_num_ptr);
-		//usleep(100);
 	}
 
 	left[0]=0;
