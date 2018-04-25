@@ -4,7 +4,7 @@
 #include<semaphore.h>
 #include<sys/time.h>
 #include<time.h>
-#define N 100
+#define N 200000
 int main(){
 	FILE *fout;
 	int sec,usec;
@@ -15,7 +15,7 @@ int main(){
 	
 	fprintf(fout,"%d \n",N);
 	for(int i=0;i<N;i++){
-		fprintf(fout,"%d ",rand()%1000+1);
+		fprintf(fout,"%d ",rand()%1000000+1);
 	}
 
 	fclose(fout);

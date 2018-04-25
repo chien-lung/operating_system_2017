@@ -9,9 +9,6 @@
 #define USING_BUBBLESORT 2
 void *partitionAndSort(void* thread_num_ptr);
 void *quickAndBubbleSort(void* ptr);
-void bubbleSort(int t_num);
-void partition(int t_num); 
-
 
 int left[THREAD_NUMS];
 int right[THREAD_NUMS];
@@ -82,6 +79,7 @@ int main(int argc, char* argv[]){
 		Single-thread
 	*/
 	pthread_t singleThread;
+
 	sem_init(&sem_st,0,0);
 	pthread_create(&singleThread, NULL, quickAndBubbleSort, NULL);
 	gettimeofday(&start,0);
@@ -92,7 +90,7 @@ int main(int argc, char* argv[]){
 		fprintf(fout2,"%d ",nums2[i]);
 	sec = end.tv_sec - start.tv_sec;
 	usec = end.tv_usec - start.tv_usec;
-	printf("Single-Thread sorting time(%d datas): %.2fsec.\n",N,sec+usec/1000000.0);	
+	printf("Multi-Thread sorting time(%d datas): %.2fsec.\n",N,sec+usec/1000000.0);	
 		
 	fclose(fout2);
 
@@ -106,37 +104,41 @@ void *quickAndBubbleSort(void* ptr){
 	pthread_exit(NULL);	
 }
 void partition(int t_num){
-	if(t_num < 7){
-		int i=left[t_num], j=right[t_num];
-		int tmp;
-		int pivot = nums2[i];
-		while(i<=j){
-			while(nums2[i] <= pivot)
-				i++;
-			while(nums2[j] > pivot)
-				j--;
-			if(i<j){
-				tmp = nums2[i];
-				nums2[i] = nums2[j];
-				nums2[j] = tmp;
-				i++;
-				j--;
-			}
-			else if(i==j)
-				j--;
+	int i=left[t_num], j=right[t_num];
+	int tmp;
+	int pivot = nums2[i];
+	
+	while(i<=j){
+		while(nums2[i] <= pivot)
+			i++;
+		while(nums2[j] > pivot)
+			j--;
+		if(i<j){
+			tmp = nums2[i];
+			nums2[i] = nums2[j];
+			nums2[j] = tmp;
+			i++;
+			j--;
 		}
-		left[2*t_num+1] = left[t_num];
-		right[2*t_num+1] = j;
-			
-		left[2*t_num+2] = i;
-		right[2*t_num+2] = right[t_num];
+		else if(i==j)
+			j--;
+	}
+	left[2*t_num+1] = left[t_num];
+	right[2*t_num+1] = j;
+		
+	left[2*t_num+2] = i;
+	right[2*t_num+2] = right[t_num];
 
+	
+	if(t_num < 7)i{
+		//if(left < j)
 		partition(2*t_num+1);
+		//if(i < right)
 		partition(2*t_num+2);
 	}
 }
 void bubbleSort(int t_num){
-	int N = right[t_num]-left[t_num]+1;
+	int N = right[thread_num]-left[thread_num]+1;
 
 	for(int i=0 ; i<N-1 ; i++)
 		for(int j=left[t_num] ; j<right[t_num]-i ; j++)
