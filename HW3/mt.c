@@ -113,6 +113,8 @@ void *partitionAndSort(void* thread_num_ptr){
 				j--;
 			}
 		}
+		printf("pivot: %d\n",pivot);
+		printf("nums[i]: %d, nums[j]: %d",nums[i],nums[j]);
 		
 		//signal left to start
 		left[2*thread_num+1] = left[thread_num];

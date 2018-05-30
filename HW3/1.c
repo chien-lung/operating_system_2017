@@ -125,6 +125,12 @@ void partition(int t_num){
 			else if(i==j)
 				j--;
 		}
+		tmp = nums2[left[t_num]];
+		nums2[left[t_num]] = nums2[j];
+		nums2[j] = tmp;
+
+		printf("pivot:%d\n",pivot);
+		printf("num2[i]:%d, nums2[j]:%d\n",nums2[i],nums2[j]);
 		left[2*t_num+1] = left[t_num];
 		right[2*t_num+1] = j;
 			
